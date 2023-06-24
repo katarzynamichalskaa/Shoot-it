@@ -22,25 +22,33 @@ public class Shooting : MonoBehaviour
 
     void Strzelaj()
     {
-        Vector3 myszkaPozycja = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 kierunekStrzalu = (myszkaPozycja - miejsceStrzalu.position).normalized;
-
-        GameObject nowaKulka = Instantiate(kulkaPrefab, miejsceStrzalu.position, miejsceStrzalu.rotation);
-        Rigidbody2D rb = nowaKulka.GetComponent<Rigidbody2D>();
-
-        if (rb != null)
+        if (Time.timeScale == 1f)
         {
-            rb.velocity = kierunekStrzalu * predkoscKulki;
-            Destroy(nowaKulka, czasZyciaKulki);
-            aktywnaKulka = nowaKulka;
+            Vector3 myszkaPozycja = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 kierunekStrzalu = (myszkaPozycja - miejsceStrzalu.position).normalized;
+
+            GameObject nowaKulka = Instantiate(kulkaPrefab, miejsceStrzalu.position, miejsceStrzalu.rotation);
+            Rigidbody2D rb = nowaKulka.GetComponent<Rigidbody2D>();
+
+            if (rb != null)
+            {
+                rb.velocity = kierunekStrzalu * predkoscKulki;
+                Destroy(nowaKulka, czasZyciaKulki);
+                aktywnaKulka = nowaKulka;
+            }
+            else
+            {
+                Debug.LogError("KulkaPrefab nie zawiera komponentu Rigidbody2D!");
+            }
         }
-        else
+
+        else if (Time.timeScale == 0f)
         {
-            Debug.LogError("KulkaPrefab nie zawiera komponentu Rigidbody2D!");
+            Debug.LogError("Game is paused");
         }
     }
 
-    void OnDestroy()
+    public void OnDestroy()
     {
         if (aktywnaKulka != null)
         {
@@ -48,3 +56,4 @@ public class Shooting : MonoBehaviour
         }
     }
 }
+
