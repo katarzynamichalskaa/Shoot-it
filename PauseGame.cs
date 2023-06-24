@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class PauseGame : MonoBehaviour
 {
-    public void TogglePause()
+    void Update()
     {
-        if(Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             if (Time.timeScale == 0f)
             {
-                Time.timeScale = 1f; 
+                Time.timeScale = 1f;
             }
             else
             {
-                Time.timeScale = 0f; 
+                Time.timeScale = 0f;
             }
+        }
     }
 }
