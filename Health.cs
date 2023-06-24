@@ -16,7 +16,6 @@ public class Health : MonoBehaviour
     public GameObject heart3;
     public CountingToRespawn countingToRespawn;
 
-
     void Start()
     {
         currentHealth = maxHealth;
@@ -31,7 +30,11 @@ public class Health : MonoBehaviour
         {
             is_on_Ground = true;
             collision_lasting = Time.time;
-            Debug.Log("Bla");
+            HealthDecrease();
+        }
+
+        if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
             HealthDecrease();
         }
     }
@@ -90,4 +93,5 @@ public class Health : MonoBehaviour
         yield return new WaitForSeconds(2f);
     
     }
+
 }
