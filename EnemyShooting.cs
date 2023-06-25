@@ -10,27 +10,31 @@ public class EnemyShooting : MonoBehaviour
     public float czasZyciaKulki = 0.5f;
     public float predkoscKulki = 5f;
     public Transform player;
-
     private GameObject aktywnaKulka;
+    public float opoznienieStrzalu = 2f;
+    public float interwalStrzalu = 2f;
+    public float odlegloscMinStrzalu = 2f;
 
-    void Update()
+    void Start()
     {
-        if (aktywnaKulka == null)
-        {
-            Strzelaj();
-        }
+        InvokeRepeating("Strzelaj", opoznienieStrzalu, interwalStrzalu);
     }
 
     void Strzelaj()
     {
         if (Time.timeScale == 1f)
         {
+            float odlegloscDoPlayera = Vector3.Distance(transform.position, player.position);
+
+            if (odlegloscDoPlayera > odlegloscMinStrzalu)
+            {
+                return; 
+            }
 
             Vector3 kierunekStrzalu = (player.position - miejsceStrzalu.position).normalized;
-
-
             GameObject nowaKulka = Instantiate(kulkaPrefab, miejsceStrzalu.position, miejsceStrzalu.rotation);
             Rigidbody2D rb = nowaKulka.GetComponent<Rigidbody2D>();
+
 
             if (rb != null)
             {
