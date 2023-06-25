@@ -8,7 +8,7 @@ public class Shooting : MonoBehaviour
     public Transform miejsceStrzalu;
     public float silaStrzalu = 10f;
     public float czasZyciaKulki = 0.5f;
-    public float predkoscKulki = 5f;
+    public float predkoscKulki = 4.5f;
 
     private GameObject aktywnaKulka;
 
