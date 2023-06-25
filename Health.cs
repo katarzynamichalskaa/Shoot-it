@@ -35,7 +35,15 @@ public class Health : MonoBehaviour
 
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
+            Destroy(collision.gameObject);
             HealthDecrease();
+        }
+
+        if (collision.gameObject.CompareTag("Heal"))
+        {
+            Debug.Log("??");
+            Destroy(collision.gameObject);
+            HealthIncrease();
         }
     }
 
@@ -63,6 +71,24 @@ public class Health : MonoBehaviour
         {
             heart1.SetActive(false);
             Respawn();
+        }
+    }
+
+    void HealthIncrease()
+    {
+        currentHealth = currentHealth + 1;
+
+        if (currentHealth == 4)
+        {
+            Debug.Log("Current health is greater than maximum health!");
+        }
+        if (currentHealth == 3)
+        {
+            heart3.SetActive(true);
+        }
+        else if (currentHealth == 2)
+        {
+            heart2.SetActive(true);
         }
     }
 
@@ -95,3 +121,4 @@ public class Health : MonoBehaviour
     }
 
 }
+
