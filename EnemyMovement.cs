@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour
     private AIPath aiPath;
     private bool isChasingPlayer = false;
 
+
     private void Start()
     {
         aiPath = GetComponent<AIPath>();
@@ -64,9 +65,13 @@ public class EnemyMovement : MonoBehaviour
         if (player != null)
         {
             Vector3 direction = player.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            if (Mathf.Sign(direction.x) != Mathf.Sign(transform.localScale.x))
+            {
+                Vector3 newScale = transform.localScale;
+                newScale.x *= -1;
+                transform.localScale = newScale;
+            }
         }
     }
 
@@ -74,10 +79,10 @@ public class EnemyMovement : MonoBehaviour
     {
         if (StartPoint != null)
         {
-            Vector3 direction = StartPoint.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Vector3 newScale = transform.localScale;
+            newScale.x *= -1;
+            transform.localScale = newScale;
 
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 
@@ -85,10 +90,10 @@ public class EnemyMovement : MonoBehaviour
     {
         if (DestinationPoint != null)
         {
-            Vector3 direction = DestinationPoint.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Vector3 newScale = transform.localScale;
+            newScale.x *= -1;
+            transform.localScale = newScale;
 
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 }
