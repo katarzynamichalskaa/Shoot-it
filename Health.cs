@@ -41,7 +41,6 @@ public class Health : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Heal"))
         {
-            Debug.Log("??");
             Destroy(collision.gameObject);
             HealthIncrease();
         }
@@ -121,4 +120,5 @@ public class Health : MonoBehaviour
     }
 
 }
+
 
