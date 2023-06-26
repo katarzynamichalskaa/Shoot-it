@@ -10,6 +10,7 @@ public class EnemyHealth : MonoBehaviour
     public GameObject heart1;
     public GameObject heart2;
     public GameObject heart3;
+    public Animator animator;
 
 
     void Start()
@@ -26,6 +27,7 @@ public class EnemyHealth : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             Destroy(collision.gameObject);
+
 
             HealthDecrease();
         }
@@ -46,6 +48,7 @@ public class EnemyHealth : MonoBehaviour
         else if (currentHealth == 0)
         {
             heart1.SetActive(false);
+            animator.Play("die");
             Destroy(enemySeeker);
         }
     }
