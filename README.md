@@ -2,5 +2,6 @@
 
 I'm still in progress!
 
-https://github.com/katarzynamichalskaa/Shoot-it-/assets/92379328/fefbdc5a-c59f-4fe5-9dfc-4481d528ce3f
+https://github.com/katarzynamichalskaa/Shoot-it-/assets/92379328/19b6d48f-d6cf-4c74-b007-e38916a2dbce
+
 
