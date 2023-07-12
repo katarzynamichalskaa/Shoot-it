@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class EndLevel : MonoBehaviour
 {
     private bool HasKey = false;
-    public int nextSceneIndex = 1;
+    private bool WasKeyBought = false;
+    private bool FirstCheck = true;
 
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -30,14 +31,24 @@ public class EndLevel : MonoBehaviour
                 Debug.Log("Nie masz klucza");
             }
 
-          
+            if(WasKeyBought && FirstCheck)
+            {
+                ChangeToNextScene();
+                FirstCheck = false;
+            }
+
+
         }
     }
 
     public void ChangeToNextScene()
     {
-        SceneManager.LoadScene("Next");
-        nextSceneIndex++;
+        SceneManager.LoadScene("Shop");
+        HasKey = false;
+    }
 
+    public void AddKeyWasBought()
+    {
+        WasKeyBought = true;
     }
 }
