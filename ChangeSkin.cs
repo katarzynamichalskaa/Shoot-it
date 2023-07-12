@@ -19,10 +19,8 @@ public class ChangeSkin : MonoBehaviour
 
     void Update()
     {
-        int myVariable = PlayerPrefs.GetInt("SkinIsBought", ValueOfSkin);
-        SkinIsBought = myVariable == ValueOfSkin;
 
-        if (myVariable == 1)
+        if (SkinIsBought)
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
@@ -41,9 +39,5 @@ public class ChangeSkin : MonoBehaviour
     public void AddSkinWasBought()
     {
         SkinIsBought = true;
-
-        PlayerPrefs.SetInt("SkinIsBought", 1);
-
-        PlayerPrefs.Save();
     }
 }
