@@ -7,19 +7,10 @@ using UnityEngine.UI;
 public class CoinsCounter : MonoBehaviour
 {
     public Text coinCounterText;
-    public Shop shop;
-
 
     private void Update()
     {
-        int Count = PlayerPrefs.GetInt("CoinCount", 0);
-
- 
-        PlayerPrefs.SetInt("CoinCount", Count);
-        PlayerPrefs.Save();
-        
-
-        coinCounterText.text = "x" + Count.ToString();
-
+        int count = Coin.ReturnCoinAmount();
+        coinCounterText.text = "x" + count.ToString();
     }
 }
