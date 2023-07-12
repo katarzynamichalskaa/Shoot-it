@@ -1,6 +1,6 @@
 # Shoot-it-
 
-##'Shoot it' is a simple game with different mechanics. 
+'Shoot it' is a simple game with different mechanics. 
 
 As a player we are able to collect money in order to buy something in shop. You can purchase a new skin, additional heart, key which is able to open every door or a new attack. 
 
