@@ -10,6 +10,8 @@ Collect keys in order to get to another map!
 
 We can pause game whenever we like. 
 
+After every map we move on to the shop, if you bought everything you wanted, after pressing "Enter" we can move to the another map. 
+
 https://github.com/katarzynamichalskaa/Shoot-it-/assets/92379328/0a587851-19b3-4ddf-b426-57192f2c55c6
 
 
