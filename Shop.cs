@@ -10,9 +10,31 @@ public class Shop : MonoBehaviour
     public int nextSceneIndex = 2;
     private int HeartPrice = 3;
     private int SkinPrice = 10;
+    private int KeyPrice = 20;
     public Health health;
     public ChangeSkin skin;
-    public CoinsCounter conuter;
+    public Coin coin;
+    public EndLevel level;
+
+
+    void Start()
+    {
+
+        GameObject playerObject = GameObject.FindWithTag("Player");
+
+        if (playerObject != null)
+        {
+            health = playerObject.GetComponent<Health>();
+            skin = playerObject.GetComponent<ChangeSkin>();
+            coin = playerObject.GetComponent<Coin>();
+            level = playerObject.GetComponent<EndLevel>();
+        }
+        else
+        {
+            Debug.LogError("Player object not found!");
+        }
+
+    }
 
     void Update()
     {
@@ -37,11 +59,8 @@ public class Shop : MonoBehaviour
 
         if (current_Amount >= HeartPrice)
         {
-            PlayerPrefs.SetInt("CoinCount", current_Amount - HeartPrice);
-            PlayerPrefs.Save();
-
             health.AddHeartWasBought();
-
+            coin.WasHeartBought();
         }
 
         else if(current_Amount != HeartPrice)
@@ -56,11 +75,8 @@ public class Shop : MonoBehaviour
 
         if (current_Amount >= SkinPrice)
         {
-            PlayerPrefs.SetInt("CoinCount", current_Amount - SkinPrice);
-            PlayerPrefs.Save();
-
             skin.AddSkinWasBought();
-
+            coin.WasSkinBought();
         }
 
         else if (current_Amount != SkinPrice)
@@ -68,5 +84,23 @@ public class Shop : MonoBehaviour
             Debug.Log("You don't have enough money to purchase this!");
         }
     }
+
+    public void BuyKey()
+    {
+        int current_Amount = Coin.ReturnCoinAmount();
+
+        if (current_Amount >= KeyPrice)
+        {
+            level.AddKeyWasBought();
+            coin.WasKeyBought();
+        }
+
+        else if (current_Amount != KeyPrice)
+        {
+            Debug.Log("You don't have enough money to purchase this!");
+        }
+    }
+
+
 
 }
