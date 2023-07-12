@@ -1,206 +1,106 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour
+
+public class Shop : MonoBehaviour
 {
-    public int maxHealth = 3; 
-    public GameObject spawnPoint; 
-    public int currentHealth; 
-    private float collision_lasting = 0f;
-    public float allowed_collision_lasting = 1f;
-    private bool is_on_Ground;
-    private bool is_touching_enemy;
-    public GameObject player;
-    public GameObject heart1;
-    public GameObject heart2;
-    public GameObject heart3;
-    public GameObject heart4;
-    public bool AnotherHeartIsBought = false;
-    public CountingToRespawn countingToRespawn;
-    public int ValueOfHeart = 1;
+
+    public int nextSceneIndex = 2;
+    private int HeartPrice = 3;
+    private int SkinPrice = 10;
+    private int KeyPrice = 20;
+    public Health health;
+    public ChangeSkin skin;
+    public Coin coin;
+    public EndLevel level;
 
 
     void Start()
     {
-        currentHealth = maxHealth;
-        heart1.SetActive(true);
-        heart2.SetActive(true);
-        heart3.SetActive(true);
-        heart4.SetActive(false);
-    }
 
+        GameObject playerObject = GameObject.FindWithTag("Player");
 
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (playerObject != null)
         {
-            is_on_Ground = true;
-            collision_lasting = Time.time;
-            HealthDecrease();
+            health = playerObject.GetComponent<Health>();
+            skin = playerObject.GetComponent<ChangeSkin>();
+            coin = playerObject.GetComponent<Coin>();
+            level = playerObject.GetComponent<EndLevel>();
+        }
+        else
+        {
+            Debug.LogError("Player object not found!");
         }
 
-        if (collision.gameObject.CompareTag("EnemyBullet"))
-        {
-            Destroy(collision.gameObject);
-            HealthDecrease();
-        }
-
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            is_touching_enemy = true;
-            collision_lasting = Time.time;
-            HealthDecrease();
-        }
-
-        if (collision.gameObject.CompareTag("Heal"))
-        {
-            Destroy(collision.gameObject);
-            HealthIncrease();
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            is_on_Ground = false;
-        }
-
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            is_touching_enemy = false;
-        }
-    }
-
-    void HealthDecrease()
-    {
-        currentHealth = currentHealth - 1;
-
-        if (AnotherHeartIsBought == false)
-        {
-            if (currentHealth == 2)
-            {
-                heart3.SetActive(false);
-            }
-            else if (currentHealth == 1)
-            {
-                heart2.SetActive(false);
-            }
-            else if (currentHealth == 0)
-            {
-                heart1.SetActive(false);
-                Respawn();
-            }
-        }
-
-        if(AnotherHeartIsBought)
-        {
-            if (currentHealth == 3)
-            {
-                heart4.SetActive(false);
-            }
-            else if (currentHealth == 2)
-            {
-                heart3.SetActive(false);
-            }
-            else if (currentHealth == 1)
-            {
-                heart2.SetActive(false);
-            }
-            else if (currentHealth == 0)
-            {
-                heart1.SetActive(false);
-                Respawn();
-            }
-        }
-    }
-
-    void HealthIncrease()
-    {
-        currentHealth = currentHealth + 1;
-        if (AnotherHeartIsBought == false)
-        {
-            if (currentHealth == 4)
-            {
-                Debug.Log("Current health is greater than maximum health!");
-            }
-            if (currentHealth == 3)
-            {
-                heart3.SetActive(true);
-            }
-            else if (currentHealth == 2)
-            {
-                heart2.SetActive(true);
-            }
-        }
-
-        if (AnotherHeartIsBought)
-        {
-            if (currentHealth == 4)
-            {
-                heart4.SetActive(true);
-            }
-            if (currentHealth == 3)
-            {
-                heart3.SetActive(true);
-            }
-            else if (currentHealth == 2)
-            {
-                heart2.SetActive(true);
-            }
-        }
     }
 
     void Update()
     {
+        CheckIfShop();
+    }
 
-        if ((is_on_Ground && Time.time - collision_lasting >= allowed_collision_lasting) || (is_touching_enemy && Time.time - collision_lasting >= allowed_collision_lasting))
+    void CheckIfShop()
+    {
+        if (SceneManager.GetActiveScene().name == "Shop")
         {
-            HealthDecrease();
-            collision_lasting = Time.time; 
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SceneManager.LoadScene("Next");
+                nextSceneIndex++;
+            }
+        }
+    }
+
+    public void BuyHeart()
+    {
+        int current_Amount = Coin.ReturnCoinAmount();
+
+        if (current_Amount >= HeartPrice)
+        {
+            health.AddHeartWasBought();
+            coin.WasHeartBought();
         }
 
-        int my = PlayerPrefs.GetInt("AnotherHeartIsBought", ValueOfHeart);
-        AnotherHeartIsBought = my == ValueOfHeart;
-
-         if (my == 0)
-          {
-             heart4.SetActive(true);
-             maxHealth = 4;
-          }
-        
-
+        else if(current_Amount != HeartPrice)
+        {
+            Debug.Log("You don't have enough money to purchase this!");
+        }
     }
 
-    void Respawn()
+    public void BuySkin()
     {
-        countingToRespawn.ShowCounting();
-        StartCoroutine(DelayedAction());
+        int current_Amount = Coin.ReturnCoinAmount();
 
-        player.transform.position = spawnPoint.transform.position;
-        currentHealth = maxHealth;
+        if (current_Amount >= SkinPrice)
+        {
+            skin.AddSkinWasBought();
+            coin.WasSkinBought();
+        }
 
-        heart1.SetActive(true);
-        heart2.SetActive(true);
-        heart3.SetActive(true);
+        else if (current_Amount != SkinPrice)
+        {
+            Debug.Log("You don't have enough money to purchase this!");
+        }
     }
 
-    private IEnumerator DelayedAction()
+    public void BuyKey()
     {
-        yield return new WaitForSeconds(2f);
-    
+        int current_Amount = Coin.ReturnCoinAmount();
+
+        if (current_Amount >= KeyPrice)
+        {
+            level.AddKeyWasBought();
+            coin.WasKeyBought();
+        }
+
+        else if (current_Amount != KeyPrice)
+        {
+            Debug.Log("You don't have enough money to purchase this!");
+        }
     }
 
-    public void AddHeartWasBought()
-    {
-        AnotherHeartIsBought = true;
 
-        PlayerPrefs.SetInt("AnotherHeartIsBought", 0);
-
-        PlayerPrefs.Save();
-    }
 
 }
-        
