@@ -8,12 +8,15 @@ public class Coin : MonoBehaviour
     private bool Was_HeartBought = false;
     private bool Was_SkinBought = false;
     private bool Was_KeyBought = false;
+    private bool Was_AttackBought = false;
     private bool HeartFirstCheck = true;
     private bool SkinFirstCheck = true;
     private bool KeyFirstCheck = true;
+    private bool AttackFirstCheck = true;
     private int HeartPrice = 3;
     private int SkinPrice = 10;
     private int KeyPrice = 20;
+    private int AttackPrice = 50;
 
     void Update()
     {
@@ -35,6 +38,12 @@ public class Coin : MonoBehaviour
             coinCount = coinCount - KeyPrice;
             KeyFirstCheck = false;
         }
+
+        if (Was_AttackBought && AttackFirstCheck)
+        {
+            coinCount = coinCount - AttackPrice;
+            AttackFirstCheck = false;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -42,7 +51,7 @@ public class Coin : MonoBehaviour
         if (collision.gameObject.CompareTag("Coin"))
         {
             Destroy(collision.gameObject);
-            AddCoins(5);
+            AddCoins(50);
         }
     }
 
@@ -70,6 +79,11 @@ public class Coin : MonoBehaviour
     public void WasKeyBought()
     {
         Was_KeyBought = true;
+    }
+
+    public void WasAttackBought()
+    {
+        Was_AttackBought = true;
     }
 
 }
