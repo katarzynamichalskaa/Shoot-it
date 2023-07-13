@@ -4,37 +4,55 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    public GameObject kulkaPrefab;
-    public Transform miejsceStrzalu;
-    public float silaStrzalu = 10f;
-    public float czasZyciaKulki = 0.5f;
-    public float predkoscKulki = 4.5f;
+    public GameObject bulletPrefab;
+    public Transform PlaceOfShoot;
+    private float LifespanOfBullet = 0.5f;
+    private float BulletVelocity = 80f;
+    private float UpgradedBulletVelocity = 200f;
+    private bool AttackIsBought = false;
 
-    private GameObject aktywnaKulka;
+
+    private GameObject activeBullet;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && aktywnaKulka == null)
+        if (Input.GetKeyDown(KeyCode.Q) && AttackIsBought)
         {
-            Strzelaj();
+            if (Input.GetMouseButtonDown(0) && activeBullet == null)
+            {
+                Shoot(UpgradedBulletVelocity);
+
+                if(Input.GetKeyDown(KeyCode.Q))
+                {
+                    Shoot(BulletVelocity);
+                }
+            }
+        }
+
+        else
+        {
+            if (Input.GetMouseButtonDown(0) && activeBullet == null)
+            {
+                Shoot(BulletVelocity);
+            }
         }
     }
 
-    void Strzelaj()
+    void Shoot(float BulletVelocity)
     {
         if (Time.timeScale == 1f)
         {
-            Vector3 myszkaPozycja = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 kierunekStrzalu = (myszkaPozycja - miejsceStrzalu.position).normalized;
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 direction = (mousePos - PlaceOfShoot.position).normalized;
 
-            GameObject nowaKulka = Instantiate(kulkaPrefab, miejsceStrzalu.position, miejsceStrzalu.rotation);
-            Rigidbody2D rb = nowaKulka.GetComponent<Rigidbody2D>();
+            GameObject newBullet = Instantiate(bulletPrefab, PlaceOfShoot.position, PlaceOfShoot.rotation);
+            Rigidbody2D rb = newBullet.GetComponent<Rigidbody2D>();
 
             if (rb != null)
             {
-                rb.velocity = kierunekStrzalu * predkoscKulki;
-                Destroy(nowaKulka, czasZyciaKulki);
-                aktywnaKulka = nowaKulka;
+                rb.velocity = direction * BulletVelocity;
+                Destroy(newBullet, LifespanOfBullet);
+                activeBullet = newBullet;
             }
             else
             {
@@ -50,10 +68,14 @@ public class Shooting : MonoBehaviour
 
     public void OnDestroy()
     {
-        if (aktywnaKulka != null)
+        if (activeBullet != null)
         {
-            Destroy(aktywnaKulka);
+            Destroy(activeBullet);
         }
     }
-}
 
+    public void AddAttackWasBought()
+    {
+        AttackIsBought = true;
+    }
+}
