@@ -11,10 +11,12 @@ public class Shop : MonoBehaviour
     private int HeartPrice = 3;
     private int SkinPrice = 10;
     private int KeyPrice = 20;
+    private int AttackPrice = 50;
     public Health health;
     public ChangeSkin skin;
     public Coin coin;
     public EndLevel level;
+    public Shooting attack; 
 
 
     void Start()
@@ -27,6 +29,7 @@ public class Shop : MonoBehaviour
             health = playerObject.GetComponent<Health>();
             skin = playerObject.GetComponent<ChangeSkin>();
             coin = playerObject.GetComponent<Coin>();
+            attack = playerObject.GetComponent<Shooting>();
             level = playerObject.GetComponent<EndLevel>();
         }
         else
@@ -96,6 +99,22 @@ public class Shop : MonoBehaviour
         }
 
         else if (current_Amount != KeyPrice)
+        {
+            Debug.Log("You don't have enough money to purchase this!");
+        }
+    }
+
+    public void BuyAttack()
+    {
+        int current_Amount = Coin.ReturnCoinAmount();
+
+        if (current_Amount >= AttackPrice)
+        {
+            attack.AddAttackWasBought();
+            coin.WasAttackBought();
+        }
+
+        else if (current_Amount != AttackPrice)
         {
             Debug.Log("You don't have enough money to purchase this!");
         }
