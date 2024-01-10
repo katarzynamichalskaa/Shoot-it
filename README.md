@@ -1,17 +1,26 @@
-# Shoot-it-
+# Shoot it
+Shoot it is an engaging 2D adventure game developed in Unity, where players embark on a captivating journey through various levels. The game introduces a classic formula of exploring, collecting, and defeating enemies, with a unique twist. Players progress through maps by finding keys to unlock doors leading to the next level, collecting coins, and using a ball launcher to eliminate enemies.
 
-'Shoot it' is a simple game with different mechanics. 
+## Key Features
 
-As a player we are able to collect money in order to buy something in shop. You can purchase a new skin, additional heart, key which is able to open every door or a new attack. 
+- **Classic Adventure Gameplay:** Enjoy classic 2D adventure gameplay as you explore maps, collect coins, and defeat enemies to progress to new levels.
 
-Moreover, in game we can meet with enemies, which are able to follow us and shoot if we come too close! So shoot them first if you would like to explore map! But don't worry, if you died you will respawn after a few seconds in the safe place. Beware of spikes on the ground! If you touch them your health will decrise. 
+- **Key Mechanic:** Navigate through each level by finding keys to unlock doors, adding an element of strategy and puzzle-solving to the game.
 
-Collect keys in order to get to another map! 
+- **Coin Collection:** Gather coins scattered throughout the maps to earn points and unlock various upgrades in the in-game store.
 
-We can pause game whenever we like. 
+- **Enemy Elimination:** Utilize a ball launcher to eliminate enemies strategically and clear your path to victory.
 
-After every map we move on to the shop, if you bought everything you wanted, after pressing "Enter" we can move to the another map. 
+- **In-Game Store:** Spend collected coins in the in-game store to purchase power-ups, extra hearts, skins, or one-time-use keys to unlock doors instantly.
 
+## In-Game Mechanics
+- **Map Progression:** Advance through a series of 2D maps, each presenting new challenges and opportunities to showcase your skills.
+
+- **Power-Up System:** Enhance your character with power-ups purchased from the in-game store, including extra hearts for increased health, different character skins, and temporary abilities.
+
+- **Strategic Enemy Defeat:** Strategically use the ball launcher to eliminate enemies in your path, avoiding damage and ensuring a successful journey.
+
+## Gameplay
 https://github.com/katarzynamichalskaa/Shoot-it-/assets/92379328/0a587851-19b3-4ddf-b426-57192f2c55c6
 
 
